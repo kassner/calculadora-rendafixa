@@ -2,7 +2,7 @@ var RendaFixaApp = angular.module('RendaFixaApp', []);
 
 RendaFixaApp.controller('CalculatorController', function ($scope, $http) {
 
-    $http.get('/taxes.json').success(function(data){
+    $http.get('taxes.json').success(function(data){
         $scope.selic = data.selic;
         $scope.cdi = data.cdi;
 
