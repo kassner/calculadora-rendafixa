@@ -127,13 +127,11 @@ var AbstractType = {
             branch = 20;
         }
 
-        var tax = math.round(amount * (branch / 100), 2);
-
-        console.log(amount, period, tax);
+        var taxAmount = math.round(amount * (branch / 100), 2);
 
         return {
             'branch': branch,
-            'amount': tax
+            'amount': taxAmount
         }
     },
 
