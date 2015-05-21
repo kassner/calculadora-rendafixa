@@ -23,6 +23,11 @@ RendaFixaApp.controller('CalculatorController', function ($scope, $http) {
     };
 });
 
+/**
+ * @TODO do not allow negative amount on any type
+ * @TODO do not allow negative period on any type
+ */
+
 var PoupancaType = {
     calculate: function (amount, period) {
         var months = AbstractType.getPeriodInMonths(period);
@@ -58,9 +63,8 @@ var CDBType = {
 var LCxType = {
     calculate: function (cdi, amount, period, percent) {
         var months = AbstractType.getPeriodInMonths(period);
-        var tax = math.pow((((cdi * (percent / 100)) / 100) + 1), (1 / 12));
-
-        var net = math.round(math.pow(tax, months) * amount, 2);
+        var rate = math.pow((((cdi * (percent / 100)) / 100) + 1), (1 / 12));
+        var net = math.round(math.pow(rate, months) * amount, 2);
 
         return {
             'net': net,

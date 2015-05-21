@@ -1,3 +1,8 @@
+/**
+ * @TODO test negative amounts
+ * @TODO test negative periods
+ */
+
 QUnit.test("AbstractType.getPeriodInMonths", function(assert) {
     var dataProvider = [
         [0, -45],
@@ -111,6 +116,27 @@ QUnit.test("PoupancaType.calculate", function(assert) {
 
     dataProvider.forEach(function(item){
         result = PoupancaType.calculate(item[2], item[3]);
+        assert.deepEqual(result, {'net': item[0], 'interest': item[1]});
+    });
+});
+
+
+QUnit.test("LCxType.calculate", function(assert) {
+    // expected net, expected interest, cdi, amount, period, percent
+    var dataProvider = [
+        [1000.00, 0, 13.13, 1000, 0, 100],
+        [1031.32, 31.32, 13.13, 1000, 90, 100],
+        [1063.63, 63.63, 13.13, 1000, 181, 100],
+        [1279.84, 279.84, 13.13, 1000, 720, 100],
+        [1123.39, 123.39, 5.99, 1000, 720, 100],
+        [1250.30, 250.30, 13.13, 1000, 720, 90],
+        [1339.95, 339.95, 13.13, 1000, 720, 120],
+    ];
+
+    var result = null;
+
+    dataProvider.forEach(function(item){
+        result = LCxType.calculate(item[2], item[3], item[4], item[5]);
         assert.deepEqual(result, {'net': item[0], 'interest': item[1]});
     });
 });
