@@ -100,6 +100,10 @@ var TesouroSelicType = {
 
 var AbstractType = {
     getPeriodInMonths: function (period) {
+        if (period < 0) {
+            return 0;
+        }
+
         return math.floor(period / 30);
     },
 

@@ -1,11 +1,18 @@
 QUnit.test("AbstractType.getPeriodInMonths", function(assert) {
-    assert.equal(AbstractType.getPeriodInMonths(1), 0);
-    assert.equal(AbstractType.getPeriodInMonths(29), 0);
-    assert.equal(AbstractType.getPeriodInMonths(30), 1);
-    assert.equal(AbstractType.getPeriodInMonths(60), 2);
-    assert.equal(AbstractType.getPeriodInMonths(361), 12);
-    assert.equal(AbstractType.getPeriodInMonths(721), 24);
-    assert.equal(AbstractType.getPeriodInMonths(1081), 36);
+    var dataProvider = [
+        [0, -45],
+        [0, 1],
+        [0, 29],
+        [1, 30],
+        [2, 60],
+        [12, 361],
+        [24, 724],
+        [36, 1082],
+    ];
+
+    dataProvider.forEach(function(item){
+        assert.equal(AbstractType.getPeriodInMonths(item[1]), item[0]);
+    });
 });
 
 QUnit.test("AbstractType.calculateIof", function(assert) {
@@ -58,6 +65,7 @@ QUnit.test("AbstractType.calculateIof", function(assert) {
 QUnit.test("AbstractType.calculateIrpf", function(assert) {
     // expected branch, expected value, amount, period
     var dataProvider = [
+        [22.5, 22.50, 100, -30],
         [22.5, 22.50, 100, 0],
         [22.5, 22.50, 100, 1],
         [22.5, 22.50, 100, 30],
@@ -88,6 +96,7 @@ QUnit.test("AbstractType.calculateIrpf", function(assert) {
 QUnit.test("PoupancaType.calculate", function(assert) {
     // expected net, expected interest, amount, period
     var dataProvider = [
+        [1000, 0, 1000, -30],
         [1000, 0, 1000, 0],
         [1000, 0, 1000, 1],
         [1000, 0, 1000, 28],
