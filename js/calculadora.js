@@ -2,7 +2,7 @@ var RendaFixaApp = angular.module('RendaFixaApp', []);
 
 RendaFixaApp.controller('CalculatorController', function ($scope, $http) {
 
-    $http.get('taxes.json').success(function(data){
+    $http.get('taxes.json').success(function (data) {
         $scope.selic = data.selic;
         $scope.cdi = data.cdi;
 
@@ -104,7 +104,7 @@ var AbstractType = {
     },
 
     calculateIof: function (amount, period) {
-        if (period >= 30) {
+        if (period <= 0 || period >= 30) {
             return 0;
         }
 
@@ -112,7 +112,8 @@ var AbstractType = {
             return 0;
         }
 
-        return math.round(1 - math.floor(100 - (period * 10 / 3)) / 100, 2);
+        var percent = (100 - math.ceil(period * 10 / 3)) / 100;
+        return math.round(percent * amount, 2);
     },
 
     calculateIrpf: function (amount, period) {
@@ -120,23 +121,23 @@ var AbstractType = {
 
         if (period > 720) {
             branch = 15;
-        }
-
-        if (period > 360) {
+        } else if (period > 360) {
             branch = 17.5;
-        }
-
-        if (period > 180) {
+        } else if (period > 180) {
             branch = 20;
         }
 
+        var tax = math.round(amount * (branch / 100), 2);
+
+        console.log(amount, period, tax);
+
         return {
             'branch': branch,
-            'amount': math.round(amount * (branch / 100), 2)
+            'amount': tax
         }
     },
 
-    calculatePercent: function(scope) {
+    calculatePercent: function (scope) {
         var netValues = [scope.lcx.interest, scope.cdb.interest, scope.tesouroselic.interest, scope.poupanca.interest];
         var max = math.max(netValues) / 100;
 
